@@ -2,7 +2,7 @@ attrs==19.3.0
 Click==7.0
 coverage==4.5.4
 Flask==1.1.1
--e git+git@github.com:migueltorrescosta/flask-demo.git@4d0e8fd4ea340e683fc17b4bcc6157c4951e58c7#egg=flaskr
+-e git+git@github.com:migueltorrescosta/flask-demo.git@6741856a2d300bbcf819e8aebc54b4cb614babe1#egg=flaskr
 importlib-metadata==1.0.0
 itsdangerous==1.1.0
 Jinja2==2.10.3
@@ -10,6 +10,7 @@ MarkupSafe==1.1.1
 more-itertools==8.0.0
 packaging==19.2
 pluggy==0.13.1
+psycopg2==2.8.4
 py==1.8.0
 pyparsing==2.4.5
 pytest==5.3.1
