@@ -31,7 +31,7 @@ def test_author_required(app, client, auth):
     # change the post author to another user
     with app.app_context():
         db = get_db()
-        db.execute('UPDATE post SET author_id = 2 WHERE id = 1')
+        db.execute('UPDATE acronym SET author_id = 2 WHERE id = 1')
         db.commit()
 
     auth.login()
@@ -58,7 +58,7 @@ def test_create(client, auth, app):
 
     with app.app_context():
         db = get_db()
-        count = db.execute('SELECT COUNT(id) FROM post').fetchone()[0]
+        count = db.execute('SELECT COUNT(id) FROM acronym').fetchone()[0]
         assert count == 2
 
 
@@ -69,7 +69,7 @@ def test_update(client, auth, app):
 
     with app.app_context():
         db = get_db()
-        post = db.execute('SELECT * FROM post WHERE id = 1').fetchone()
+        post = db.execute('SELECT * FROM acronym WHERE id = 1').fetchone()
         assert post['title'] == 'updated'
 
 
@@ -79,7 +79,7 @@ def test_update(client, auth, app):
 ))
 def test_create_update_validate(client, auth, path):
     auth.login()
-    response = client.post(path, data={'title': '', 'body': ''})
+    response = client.post(path, data={'acronym': '', 'description': ''})
     assert b'Title is required.' in response.data
 
 
@@ -90,5 +90,5 @@ def test_delete(client, auth, app):
 
     with app.app_context():
         db = get_db()
-        post = db.execute('SELECT * FROM post WHERE id = 1').fetchone()
-        assert post is None
+        acronym = db.execute('SELECT * FROM acronym WHERE id = 1').fetchone()
+        assert acronym is None

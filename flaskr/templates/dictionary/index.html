@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Acronyms{% endblock %}</h1>
+  {% if g.user %}
+    <a class="action" href="{{ url_for('dictionary.create') }}">New</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% for acronym in acronyms %}
+    <article class="acronym">
+      <header>
+        <div>
+          <h1>{{ acronym['acronym'] }}</h1>
+          <div class="about">by {{ acronym['username'] }} on {{ acronym['created'].strftime('%Y-%m-%d') }}</div>
+        </div>
+        {% if g.user['id'] == acronym['author_id'] %}
+          <a class="action" href="{{ url_for('dictionary.update', id=acronym['id']) }}">Edit</a>
+        {% endif %}
+      </header>
+      <p class="body">{{ acronym['description'] }}</p>
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}
