@@ -6,20 +6,20 @@
     <a class="action" href="{{ url_for('dictionary.create') }}">New</a>
   {% endif %}
 {% endblock %}
-
+mpereira on
 {% block content %}
   {% for acronym in acronyms %}
     <article class="acronym">
       <header>
         <div>
-          <h1>{{ acronym['acronym'] }}</h1>
+          <h1>{{ acronym['acronym'] }}</h1><div class="body">{{ acronym['description'] }}</div>
           <div class="about">by {{ acronym['username'] }} on {{ acronym['created'].strftime('%Y-%m-%d') }}</div>
         </div>
         {% if g.user['id'] == acronym['author_id'] %}
           <a class="action" href="{{ url_for('dictionary.update', id=acronym['id']) }}">Edit</a>
         {% endif %}
       </header>
-      <p class="body">{{ acronym['description'] }}</p>
+
     </article>
     {% if not loop.last %}
       <hr>
