@@ -5,11 +5,13 @@
 {% endblock %}
 
 {% block content %}
+
   <form action="{{ url_for('dictionary.search')}}" method="get">
-    <input name="query_string" id="query_string" placeholder="{{ query_string }}" required>
+
+    <input name="query_string" id="query_string" placeholder="{% if query_string %}{{ query_string }}{% else %}Search here{% endif %}" required>
   </form>
 
-  {% if query_string != "Search here" %}
+  {% if query_string %}
   <form action="{{ url_for('dictionary.index')}}" method="get">
     <input type="submit" value="Show all entries">
   </form>
@@ -36,8 +38,8 @@
     <hr>
   {% endfor %}
 
-  {% if g.user and query_string != "Search here" %}
-    <form action="{{ url_for('dictionary.create')}}" method="get">
+  {% if g.user and query_string%}
+    <form action="{{ url_for('dictionary.create', acronym='{{ query_string }}') }}" method="get">
       <input type="submit" value="Add new entry for {{ query_string }}">
     </form>
 

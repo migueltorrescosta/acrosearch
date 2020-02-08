@@ -7,9 +7,9 @@
 {% block content %}
   <form method="post">
     <label for="acronym">Acronym</label>
-    <input name="acronym" id="acronym" value="{{ request.form['acronym'] }}" required>
+    <input name="acronym" id="acronym" required> {{ query_string }}
     <label for="description">Description</label>
-    <textarea name="description" id="description">{{ request.form['description'] }}</textarea>
+    <textarea name="description" id="description" required>{{ request.form['description'] }}</textarea>
     <input type="submit" value="Save">
   </form>
 

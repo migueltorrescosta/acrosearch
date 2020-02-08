@@ -17,7 +17,7 @@ def index():
         ' FROM acronym p JOIN user u ON p.author_id = u.id'
         ' ORDER BY acronym DESC'
     ).fetchall()
-    return render_template('dictionary/index.html', acronyms=acronyms, query_string="Search here")
+    return render_template('dictionary/index.html', acronyms=acronyms, query_string="")
 
 
 @bp.route('/create', methods=('GET', 'POST'))
