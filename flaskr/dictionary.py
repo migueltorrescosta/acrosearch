@@ -17,7 +17,7 @@ def index():
         ' FROM acronym p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
-    return render_template('dictionary/index.html', acronyms=acronyms)
+    return render_template('dictionary/index.html', acronyms=acronyms, query_string="Search here")
 
 
 @bp.route('/create', methods=('GET', 'POST'))
@@ -101,8 +101,9 @@ def delete(id):
     return redirect(url_for('dictionary.index'))
 
 
-@bp.route('/search/<string:query_string>', methods=('GET',))
-def search(query_string):
+@bp.route('/search', methods=('POST',))
+def search():
+    query_string = request.form['query_string']
     db = get_db()
     acronyms = db.execute(
         'SELECT p.id, acronym, description, created, author_id, username'
@@ -110,4 +111,4 @@ def search(query_string):
         ' WHERE acronym like ? OR description like ?'
         ' ORDER BY created DESC', (query_string, query_string)
     ).fetchall()
-    return render_template('dictionary/index.html', acronyms=acronyms)
+    return render_template('dictionary/index.html', acronyms=acronyms, query_string=query_string)

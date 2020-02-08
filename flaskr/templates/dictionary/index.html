@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Acronyms{% endblock %}</h1>
+  <form action="{{ url_for('dictionary.search')}}" method="post">
+    <input name="query_string" id="query_string" placeholder="{{ query_string }}" required>
+  </form>
   {% if g.user %}
     <a class="action" href="{{ url_for('dictionary.create') }}">New</a>
   {% endif %}
@@ -25,4 +27,7 @@
       <hr>
     {% endif %}
   {% endfor %}
+  <form action="{{ url_for('dictionary.index')}}" method="get">
+    <input type="submit" value="Back to Homepage">
+  </form>
 {% endblock %}
