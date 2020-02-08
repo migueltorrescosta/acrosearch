@@ -12,4 +12,8 @@
     <textarea name="description" id="description">{{ request.form['description'] }}</textarea>
     <input type="submit" value="Save">
   </form>
+
+  <form action="{{ url_for('dictionary.index')}}" method="get">
+    <input type="submit" value="Back to index">
+  </form>
 {% endblock %}

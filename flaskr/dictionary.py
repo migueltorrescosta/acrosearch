@@ -15,7 +15,7 @@ def index():
     acronyms = db.execute(
         'SELECT p.id, acronym, description, created, author_id, username'
         ' FROM acronym p JOIN user u ON p.author_id = u.id'
-        ' ORDER BY created DESC'
+        ' ORDER BY acronym DESC'
     ).fetchall()
     return render_template('dictionary/index.html', acronyms=acronyms, query_string="Search here")
 
@@ -29,7 +29,7 @@ def create():
         error = None
 
         if not acronym:
-            error = 'Title is required.'
+            error = 'Acronym is required.'
 
         if error is not None:
             flash(error)
@@ -74,7 +74,7 @@ def update(id):
         error = None
 
         if not acronym:
-            error = 'Title is required.'
+            error = 'Acronym is required.'
 
         if error is not None:
             flash(error)
@@ -101,14 +101,14 @@ def delete(id):
     return redirect(url_for('dictionary.index'))
 
 
-@bp.route('/search', methods=('POST',))
+@bp.route('/search', methods=('GET',))
 def search():
-    query_string = request.form['query_string']
+    query_string = request.args['query_string']
     db = get_db()
     acronyms = db.execute(
         'SELECT p.id, acronym, description, created, author_id, username'
         ' FROM acronym p JOIN user u ON p.author_id = u.id'
         ' WHERE acronym like ? OR description like ?'
-        ' ORDER BY created DESC', (query_string, query_string)
+        ' ORDER BY acronym DESC', (query_string, query_string)
     ).fetchall()
     return render_template('dictionary/index.html', acronyms=acronyms, query_string=query_string)

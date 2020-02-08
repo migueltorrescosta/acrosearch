@@ -1,20 +1,30 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <form action="{{ url_for('dictionary.search')}}" method="post">
-    <input name="query_string" id="query_string" placeholder="{{ query_string }}" required>
-  </form>
-  {% if g.user %}
-    <a class="action" href="{{ url_for('dictionary.create') }}">New</a>
-  {% endif %}
+
 {% endblock %}
 
 {% block content %}
+  <form action="{{ url_for('dictionary.search')}}" method="get">
+    <input name="query_string" id="query_string" placeholder="{{ query_string }}" required>
+  </form>
+
+  {% if query_string != "Search here" %}
+  <form action="{{ url_for('dictionary.index')}}" method="get">
+    <input type="submit" value="Show all entries">
+  </form>
+  {% endif %}
+<!--
+  {% if g.user %}
+    <a class="action" href="{{ url_for('dictionary.create') }}">New</a>
+  {% endif %}
+-->
   {% for acronym in acronyms %}
     <article class="acronym">
       <header>
         <div>
-          <h1>{{ acronym['acronym'] }}</h1><div class="body">{{ acronym['description'] }}</div>
+          <h1>{{ acronym['acronym'] }}</h1>
+          <div class="body">{{ acronym['description'] }}</div>
           <div class="about">by {{ acronym['username'] }} on {{ acronym['created'].strftime('%Y-%m-%d') }}</div>
         </div>
         {% if g.user['id'] == acronym['author_id'] %}
@@ -23,11 +33,13 @@
       </header>
 
     </article>
-    {% if not loop.last %}
-      <hr>
-    {% endif %}
+    <hr>
   {% endfor %}
-  <form action="{{ url_for('dictionary.index')}}" method="get">
-    <input type="submit" value="Back to Homepage">
-  </form>
+
+  {% if g.user and query_string != "Search here" %}
+    <form action="{{ url_for('dictionary.create')}}" method="get">
+      <input type="submit" value="Add new entry for {{ query_string }}">
+    </form>
+
+  {% endif %}
 {% endblock %}
