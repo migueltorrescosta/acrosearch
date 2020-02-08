@@ -101,8 +101,7 @@ def delete(id):
     return redirect(url_for('dictionary.index'))
 
 
-@bp.route('/search/<query_string:id>', methods=('GET',))
-@login_required
+@bp.route('/search/<string:query_string>', methods=('GET',))
 def search(query_string):
     db = get_db()
     acronyms = db.execute(
