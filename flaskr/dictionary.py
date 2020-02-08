@@ -99,3 +99,16 @@ def delete(id):
     db.execute('DELETE FROM acronym WHERE id = ?', (id,))
     db.commit()
     return redirect(url_for('dictionary.index'))
+
+
+@bp.route('/search/<query_string:id>', methods=('GET',))
+@login_required
+def search(query_string):
+    db = get_db()
+    acronyms = db.execute(
+        'SELECT p.id, acronym, description, created, author_id, username'
+        ' FROM acronym p JOIN user u ON p.author_id = u.id'
+        ' WHERE acronym like ? OR description like ?'
+        ' ORDER BY created DESC', (query_string, query_string)
+    ).fetchall()
+    return render_template('dictionary/index.html', acronyms=acronyms)
