@@ -4,6 +4,7 @@
 <nav>
     <h1>Database for the RAMless</h1>
     <ul>
+        <li><a href="{{ url_for('dictionary.index') }}">Index</a>
         {% if g.user %}
         <li><span>{{ g.user['username'] }}</span>
         <li><a href="{{ url_for('auth.logout') }}">Log Out</a>

@@ -11,12 +11,13 @@
     <input name="query_string" id="query_string" placeholder="{% if query_string %}{{ query_string }}{% else %}Search here{% endif %}" required>
   </form>
 
+<!--
   {% if query_string %}
   <form action="{{ url_for('dictionary.index')}}" method="get">
     <input type="submit" value="Show all entries">
   </form>
   {% endif %}
-<!--
+
   {% if g.user %}
     <a class="action" href="{{ url_for('dictionary.create') }}">New</a>
   {% endif %}
