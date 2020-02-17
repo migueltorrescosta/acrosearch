@@ -15,7 +15,7 @@ def index():
     acronyms = db.execute(
         'SELECT p.id, acronym, description, created, author_id, username'
         ' FROM acronym p JOIN user u ON p.author_id = u.id'
-        ' ORDER BY acronym DESC'
+        ' ORDER BY acronym ASC'
     ).fetchall()
     return render_template('dictionary/index.html', acronyms=acronyms, query_string="")
 
@@ -109,6 +109,6 @@ def search():
         'SELECT p.id, acronym, description, created, author_id, username'
         ' FROM acronym p JOIN user u ON p.author_id = u.id'
         ' WHERE acronym like ? OR description like ?'
-        ' ORDER BY acronym DESC', (query_string, query_string)
+        ' ORDER BY created DESC', (query_string, query_string)
     ).fetchall()
     return render_template('dictionary/index.html', acronyms=acronyms, query_string=query_string)
